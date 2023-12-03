@@ -40,10 +40,13 @@ public class Calc {
                     if(opr == 42){
                         left = left * right;
                     } else if (opr == 47) {
-                        left = left / right;
                         if(right == 0){
                             outputField.setText("buh.");
                             isLeft = true;
+                            left = 0;
+                            break;
+                        }else {
+                            left = left / right;
                         }
                     } else if (opr == 43) {
                         left = left + right;
@@ -53,6 +56,8 @@ public class Calc {
                         left = left % right;
                     }
                     outputField.setText(Double.toString(left));
+                    right = 0;
+                    isLeft = true;
                     break;
                 case 37: // %
                     opr = 37;
