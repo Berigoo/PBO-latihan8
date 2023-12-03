@@ -10,31 +10,34 @@ public class Calc {
         @Override
         public void actionPerformed (ActionEvent e) {
             CalcButton btn = (CalcButton) e.getSource();
-            String val = outputField.getText();
             switch (btn.getInteger()){
                 case 42: // *
-                    val += " *";
                     opr = 42;
-                    outputField.setText(Double.toString(left) + " " + (char)opr);
+                    if (right != 0)outputField.setText(left + " " + (char)opr + " " + right);
+                    else outputField.setText(left + " " + (char)opr);
                     isLeft = false;
+                    isDec = false;
                     break;
                 case 47: // /
-                    val += " /";
                     opr = 47;
-                    outputField.setText(Double.toString(left) + " " + (char)opr);
+                    if (right != 0)outputField.setText(left + " " + (char)opr + " " + right);
+                    else outputField.setText(left + " " + (char)opr);
                     isLeft = false;
+                    isDec = false;
                     break;
                 case 43: // +
-                    val += " +";
                     opr = 43;
-                    outputField.setText(Double.toString(left) + " " + (char)opr);
+                    if (right != 0)outputField.setText(left + " " + (char)opr + " " + right);
+                    else outputField.setText(left + " " + (char)opr);
                     isLeft = false;
+                    isDec = false;
                     break;
                 case 45: // -
-                    val += " -";
                     opr = 45;
-                    outputField.setText(Double.toString(left) + " " + (char)opr);
+                    if (right != 0)outputField.setText(left + " " + (char)opr + " " + right);
+                    else outputField.setText(left + " " + (char)opr);
                     isLeft = false;
+                    isDec = false;
                     break;
                 case 61: // =
                     if(opr == 42){
@@ -57,39 +60,60 @@ public class Calc {
                     }
                     outputField.setText(Double.toString(left));
                     right = 0;
-                    isLeft = true;
+                    decrCount = 1;
+                    isDec = false;
                     break;
                 case 37: // %
                     opr = 37;
-                    outputField.setText(Double.toString(left) + " " + (char)opr);
+                    if (right != 0)outputField.setText(left + " " + (char)opr + " " + right);
+                    else outputField.setText(left + " " + (char)opr);
                     isLeft = false;
+                    isDec = false;
                     break;
                 case 66: // B
                     break;
                 case 69: // E
                     break;
                 case 67: // C
+                    outputField.setText("");
+                    left = 0;
+                    right = 0;
+                    isLeft = true;
+                    isDec = false;
+                    declCount = 1;
+                    decrCount = 1;
                     break;
                 case 46: // .
+                    isDec = true;
                     break;
                 default:
                     if(isLeft){
-                        if(left == 0)left = btn.getInteger();
+                        if(isDec){
+                            left = left + (btn.getInteger()/Math.pow(10, declCount));
+                            declCount++;
+                        }
+                        else if(left <= 0)left = btn.getInteger();
                         else left = left * Math.pow(10, 1) + btn.getInteger();
                         outputField.setText(Double.toString(left));
                     }else {
-                        if(right == 0)right = btn.getInteger();
+                        if(isDec) {
+                            right = right + (btn.getInteger() / Math.pow(10, decrCount));
+                            decrCount++;
+                        }
+                        else if(right <= 0)right = btn.getInteger();
                         else right = right * Math.pow(10, 1) + btn.getInteger();
-                        outputField.setText((Double.toString(left) + " " + (char)opr + " " + right));
+                        outputField.setText((left + " " + (char)opr + " " + right));
                     }
                     break;
             }
         }
     }
-    private double left=0, right=0, res=0;
-    int lloop = 0;
+    private double left=0, right=0;
+    private int declCount = 1;
+    private int decrCount = 1;
     private boolean isLeft = true;
-    int opr = 43;
+    private int opr = 43;
+    private boolean isDec = false;
 
     private JTextField outputField = null;
     private _actionListener actionListener;
