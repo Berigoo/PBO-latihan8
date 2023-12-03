@@ -31,10 +31,20 @@ public class Calc {
                     isLeft = false;
                     break;
                 case 45: // -
-                    val += " -";
-                    opr = 45;
+                    if(isLeft){
+                        if(left.charAt(0) != '-')left = "-" + left;
+                        else{
+                            opr = 45;
+                            isLeft = false;
+                        }
+                    }else {
+                        if(right.charAt(0) != '-')right = "-" + right;
+                        else{
+                            opr = 45;
+                        }
+                    }
+
                     outputField.setText(left + " " + (char)opr + " " + right);
-                    isLeft = false;
                     break;
                 case 61: // =
                     if(left.isEmpty()) left = "0";
