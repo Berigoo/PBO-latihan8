@@ -71,6 +71,23 @@ public class Calc {
                     isDec = false;
                     break;
                 case 66: // B
+                    if(isLeft) {
+                        String last = Double.toString(left);
+                        if(last.charAt(last.length()-1) == '0') {
+                            last = last.substring(0, last.indexOf(".")-1);
+                            left = Double.parseDouble(last);
+                            outputField.setText(Double.toString(left));
+                        }else {
+                            declCount--;
+                            double num = Double.parseDouble(last);
+                            last = last.substring(0, last.length()-1);
+                            System.out.println(last);
+                            left = Double.parseDouble(last);
+                            System.out.println(num + " " + -left);
+                            left = -left + num;
+                            outputField.setText(Double.toString(left));
+                        }
+                    }
                     break;
                 case 69: // E
                     break;
