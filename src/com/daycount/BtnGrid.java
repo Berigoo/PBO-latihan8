@@ -1,16 +1,18 @@
-package com.calc;
+package com.daycount;
+
+import com.calc.ButtonGrid;
+import com.calc.CalcButton;
+
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ButtonGrid extends Panel{
-    public HashMap<String, CalcButton> buttonList = new HashMap<String, CalcButton>();
+public class BtnGrid extends JPanel {
+    public HashMap<String, JButton> buttonList = new HashMap<String, JButton>();
 
-    public ButtonGrid (String[] arr, int rows){
+    public BtnGrid (String[] arr, int rows){
         super(new GridLayout(rows, (arr.length/rows), 5, 5));
 
         for(String x : arr){
@@ -22,14 +24,14 @@ public class ButtonGrid extends Panel{
             btn.setName(x);
 
             buttonList.put(x, btn);
-            getPanel().add(buttonList.get(x));
+            add(buttonList.get(x));
         }
+        setBackground(new Color(29, 32, 33));
     }
 
     public void eventsPoll(ActionListener listener){
-        for(Map.Entry<String, CalcButton> entry : buttonList.entrySet()){
+        for(Map.Entry<String, JButton> entry : buttonList.entrySet()){
             entry.getValue().addActionListener(listener);
         }
     }
-
 }

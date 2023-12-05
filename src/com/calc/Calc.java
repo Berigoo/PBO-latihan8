@@ -10,22 +10,18 @@ public class Calc {
         @Override
         public void actionPerformed (ActionEvent e) {
             CalcButton btn = (CalcButton) e.getSource();
-            String val = outputField.getText();
             switch (btn.getInteger()){
                 case 42: // *
-                    val += " *";
                     opr = 42;
                     outputField.setText(left + " " + (char)opr + " " + right);
                     isLeft = false;
                     break;
                 case 47: // /
-                    val += " /";
                     opr = 47;
                     outputField.setText(left + " " + (char)opr + " " + right);
                     isLeft = false;
                     break;
                 case 43: // +
-                    val += " +";
                     opr = 43;
                     outputField.setText(left + " " + (char)opr + " " + right);
                     isLeft = false;
