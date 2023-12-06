@@ -14,6 +14,7 @@ public class Calc {
                 case 42: // *
                     opr = 42;
                     outputField.setText(left + " " + (char)opr + " " + right);
+
                     isLeft = false;
                     isDec = false;
                     break;
@@ -21,12 +22,14 @@ public class Calc {
                     opr = 47;
                     outputField.setText(left + " " + (char)opr + " " + right);
 
+
                     isLeft = false;
                     isDec = false;
                     break;
                 case 43: // +
                     opr = 43;
                     outputField.setText(left + " " + (char)opr + " " + right);
+
 
                     isLeft = false;
                     isDec = false;
@@ -46,6 +49,7 @@ public class Calc {
                     }
 
                     outputField.setText(left + " " + (char)opr + " " + right);
+
 
                     break;
                 case 61: // =
@@ -79,6 +83,7 @@ public class Calc {
                     opr = 37;
                     outputField.setText(left + " " + (char)opr + " " + right);
 
+
                     isLeft = false;
                     isDec = false;
                     break;
@@ -91,6 +96,7 @@ public class Calc {
                         if(right.length()>1)right = right.substring(0, right.length() - 1);
                         else right = "0";
                         outputField.setText(left + " " + (char)opr + " " + right);
+
                     }
                     break;
                 case 69: // E
@@ -121,6 +127,7 @@ public class Calc {
                         if(right.length() == 1 && right.compareTo("0") == 0) right = btn.getName();
                         else right = right.concat(btn.getName());
                         outputField.setText(left + " " + (char)opr + " " + right);
+
                     }
                     break;
             }
@@ -128,6 +135,7 @@ public class Calc {
     }
     private String left="", right="", res="";
     int lloop = 0;
+
     private boolean isLeft = true;
     private int opr = 43;
     private boolean isDec = false;
