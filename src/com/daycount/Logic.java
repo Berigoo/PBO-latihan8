@@ -12,7 +12,6 @@ public class Logic {
     class _actionListener implements ActionListener{
         @Override
         public void actionPerformed (ActionEvent e) {
-            System.out.println("Button pressed");
             JButton btn = (JButton) e.getSource();
             if(btn.getName().compareTo("Hapus") == 0){
                 reset();
@@ -64,6 +63,8 @@ public class Logic {
             BufferedWriter out = new BufferedWriter(new FileWriter("out.txt", true));
             calc();
             out.write(output.getText() + "\n");
+            out.close();
+            System.out.println("Writed!");
         }catch (Exception exception){
             System.err.println(exception.getMessage());
         }

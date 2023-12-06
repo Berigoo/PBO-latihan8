@@ -20,7 +20,7 @@ public class Launcher {
                 Label lTahun = new Label("Tahun");
                 TextField tTahun = new TextField();
                 Label lBulan = new Label("Bulan");
-                JComboBox<String> cBulan = new JComboBox<>(new String[] {"Januari", "Februari", "Maret", "April", "Mei",
+                ComboBox<String> cBulan = new ComboBox<>(new String[] {"Januari", "Februari", "Maret", "April", "Mei",
                 "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"});
 
                 top.getPanel().add(lTahun);
