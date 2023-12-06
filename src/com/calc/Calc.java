@@ -15,16 +15,21 @@ public class Calc {
                     opr = 42;
                     outputField.setText(left + " " + (char)opr + " " + right);
                     isLeft = false;
+                    isDec = false;
                     break;
                 case 47: // /
                     opr = 47;
                     outputField.setText(left + " " + (char)opr + " " + right);
+
                     isLeft = false;
+                    isDec = false;
                     break;
                 case 43: // +
                     opr = 43;
                     outputField.setText(left + " " + (char)opr + " " + right);
+
                     isLeft = false;
+                    isDec = false;
                     break;
                 case 45: // -
                     if(isLeft){
@@ -41,6 +46,7 @@ public class Calc {
                     }
 
                     outputField.setText(left + " " + (char)opr + " " + right);
+
                     break;
                 case 61: // =
                     if(left.isEmpty()) left = "0";
@@ -72,7 +78,9 @@ public class Calc {
                 case 37: // %
                     opr = 37;
                     outputField.setText(left + " " + (char)opr + " " + right);
+
                     isLeft = false;
+                    isDec = false;
                     break;
                 case 66: // B
                     if(isLeft){
@@ -121,7 +129,8 @@ public class Calc {
     private String left="", right="", res="";
     int lloop = 0;
     private boolean isLeft = true;
-    int opr = 43;
+    private int opr = 43;
+    private boolean isDec = false;
 
     private JTextField outputField = null;
     private _actionListener actionListener;
