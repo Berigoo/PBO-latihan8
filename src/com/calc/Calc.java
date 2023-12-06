@@ -3,143 +3,90 @@ package com.calc;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Calc {
     class _actionListener implements ActionListener{
         @Override
         public void actionPerformed (ActionEvent e) {
             CalcButton btn = (CalcButton) e.getSource();
+            Pattern p = Pattern.compile("\\G(-?.?\\d+(\\.\\d+)?)(\\s+)?([\\+\\-\\*/%])?(\\s+)?(-?.?\\d+(\\.\\d+)?)?");
+            Matcher m = p.matcher(outputField.getText());
+            StringBuffer s = new StringBuffer();
+            System.out.println(outputField.getText());
+            String g1 = "", g2="", g3="";
+            if (m.find()) {
+                g1 = m.group(1);
+                g2 = m.group(4);
+                g3 = m.group(6);
+            }
+            System.out.println(outputField);
+            System.out.println(g1 + " " + g2 + " " + g3);
             switch (btn.getInteger()){
                 case 42: // *
-                    opr = 42;
-                    outputField.setText(left + " " + (char)opr + " " + right);
-
-                    isLeft = false;
-                    isDec = false;
+                    outputField.setText(outputField.getText() + "*");
                     break;
                 case 47: // /
-                    opr = 47;
-                    outputField.setText(left + " " + (char)opr + " " + right);
-
-
-                    isLeft = false;
-                    isDec = false;
+                    outputField.setText(outputField.getText() + "/");
                     break;
                 case 43: // +
-                    opr = 43;
-                    outputField.setText(left + " " + (char)opr + " " + right);
-
-
-                    isLeft = false;
-                    isDec = false;
+                    outputField.setText(outputField.getText() + "+");
                     break;
                 case 45: // -
-                    if(isLeft){
-                        if(left.charAt(0) != '-')left = "-" + left;
-                        else{
-                            opr = 45;
-                            isLeft = false;
-                        }
-                    }else {
-                        if(right.charAt(0) != '-')right = "-" + right;
-                        else{
-                            opr = 45;
-                        }
-                    }
-
-                    outputField.setText(left + " " + (char)opr + " " + right);
-
-
+                    outputField.setText(outputField.getText() + "-");
                     break;
                 case 61: // =
-                    if(left.isEmpty()) left = "0";
-                    if(right.isEmpty()) right = "0";
-                    double _left = Double.parseDouble(left);
-                    double _right = Double.parseDouble(right);
-                    if(opr == 42){
-                        left = Double.toString( _left * _right);
-                    } else if (opr == 47) {
-                        if(right.isEmpty() || right.equals("0")){
-                            outputField.setText("buh.");
-                            isLeft = true;
-                            left = "";
-                            break;
-                        }else {
-                            left = Double.toString( _left / _right);
+                    if(!g3.isEmpty() && !g1.isEmpty()) {
+                        Double left = Double.parseDouble(g1);
+                        Double rigth = Double.parseDouble(g3);
+                        switch (g2) {
+                            case "*":
+                                outputField.setText((left * rigth) + " ");
+                                break;
+                            case "/":
+                                outputField.setText((left / rigth) + " ");
+                                break;
+                            case "+":
+                                outputField.setText((left + rigth) + " ");
+                                break;
+                            case "-":
+                                outputField.setText((left - rigth) + " ");
+                                break;
+                            case "%":
+                                outputField.setText((left % rigth) + " ");
+                                break;
                         }
-                    } else if (opr == 43) {
-                        left = Double.toString( _left + _right);
-                    } else if (opr == 45) {
-                        left = Double.toString( _left - _right);
-                    } else if (opr == 37) {
-                        left = Double.toString( _left % _right);
                     }
-                    outputField.setText(left);
-                    right = "";
-                    isLeft = false;
                     break;
                 case 37: // %
-                    opr = 37;
-                    outputField.setText(left + " " + (char)opr + " " + right);
-
-
-                    isLeft = false;
-                    isDec = false;
+                    outputField.setText(outputField.getText() + "-");
                     break;
                 case 66: // B
-                    if(isLeft){
-                        if(left.length()>1)left = left.substring(0, left.length()-1);
-                        else left = "0";
-                        outputField.setText(left);
-                    }else {
-                        if(right.length()>1)right = right.substring(0, right.length() - 1);
-                        else right = "0";
-                        outputField.setText(left + " " + (char)opr + " " + right);
-
-                    }
+                    outputField.setText(outputField.getText().substring(0, outputField.getText().length()-1));
                     break;
                 case 69: // E
-                    if(isLeft){
-                        left = "0";
-                        outputField.setText(left);
-                    } else{
-                        right = "0";
-                        outputField.setText(left + " " + (char)opr + " " + right);
+                    if(g3 == null){
+                        outputField.setText("");
+                    }else{
+                        m.appendReplacement(s, "$1$2");
+                        outputField.setText(s.toString());
                     }
                     break;
                 case 67: // C
                     outputField.setText("");
-                    left = "";
-                    right = "";
-                    isLeft = true;
                     break;
                 case 46: // .
-                    if(isLeft)left = left.concat(".");
-                    else right = right.concat(".");
+                    outputField.setText(outputField.getText().concat("."));
                     break;
                 default:
-                    if(isLeft){
-                        if(left.length() == 1 && left.compareTo("0") == 0) left = btn.getName();
-                        else left = left.concat(btn.getName());
-                        outputField.setText(left);
-                    }else {
-                        if(right.length() == 1 && right.compareTo("0") == 0) right = btn.getName();
-                        else right = right.concat(btn.getName());
-                        outputField.setText(left + " " + (char)opr + " " + right);
-
-                    }
+                    String out = outputField.getText();
+                    if(!out.isEmpty() && out.charAt(out.length()-1) == ' ')out = out.substring(0, out.length()-1);
+                    outputField.setText(out + btn.getName());
                     break;
             }
         }
     }
-    private String left="", right="", res="";
-    int lloop = 0;
-
-    private boolean isLeft = true;
-    private int opr = 43;
-    private boolean isDec = false;
-
     private JTextField outputField = null;
     private _actionListener actionListener;
     public Calc(JTextField out){

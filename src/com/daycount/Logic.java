@@ -48,12 +48,14 @@ public class Logic {
         }
     }
     private void setOutput(int dayCount){
-        output.setText("Jumlah hari pada bulan " + inputMonth.getSelectedItem() + " tahun " + inputYear.getText() + " adalah " + dayCount);
+        String year = "2023";
+        if(!inputYear.getText().isEmpty()) year = inputYear.getText();
+        output.setText("Jumlah hari pada bulan " + inputMonth.getSelectedItem() + " tahun " + year + " adalah " + dayCount);
     }
     public void calc(){
         int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         if(inputMonth.getSelectedIndex() == 1){
-            setOutput(days[1] + isLeapYear(Integer.parseInt(inputYear.getText())));
+            setOutput(days[1] + isLeapYear(Integer.parseInt((inputYear.getText().isEmpty()) ? "2023" : inputYear.getText())));
         }else {
             setOutput(days[inputMonth.getSelectedIndex()]);
         }
